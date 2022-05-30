@@ -14,7 +14,7 @@ public class Instrument {
     private String issuerName;
 
     @OneToMany(mappedBy = "instrument")
-    List<ShortPosition> shortPositions;
+    private List<ShortPosition> shortPositions;
 
     public Instrument(String isin, String name) {
         this.isin = isin;

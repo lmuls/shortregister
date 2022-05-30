@@ -15,6 +15,10 @@ public class ShortPosition {
     @JoinColumn(name = "instrument")
     private Instrument instrument;
 
+    @ManyToOne
+    @JoinColumn(name = "shorter")
+    private Shorter shorter;
+
     @Column(name="opened")
     private Date opened;
 
@@ -23,4 +27,9 @@ public class ShortPosition {
 
     @Column(name="active")
     private boolean active;
+
+    @OneToMany(mappedBy = "shortPosition")
+    private List<ShortPositionHistory> shortPositionHistories;
+
+    public ShortPosition() {};
 }
