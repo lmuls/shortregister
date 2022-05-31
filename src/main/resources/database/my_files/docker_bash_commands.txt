@@ -1,1 +1,0 @@
-docker exec -it database-db-1 bash -c 'psql -d shortdb -U shortuser'
