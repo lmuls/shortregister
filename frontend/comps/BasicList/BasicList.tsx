@@ -10,24 +10,18 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import {types} from "util";
 import {JSXElement} from "@babel/types";
+import {Instrument} from "../../pages";
 
-type ListProps = {
-    data: [
-        instruments: {
-            isin: string;
-            issuerName: string;
-        }
-    ]
-}
 
-const BasicList = ({data} : ListProps): JSX.Element => {
+const BasicList = ({elements} : {elements: Instrument[] }): JSX.Element => {
 
-    function mapElements(element: {isin: string, issuerName: string}): JSX.Element {
-        return <ListItem disablePadding>
+    function mapElements(element: Instrument): JSX.Element {
+        console.log(element)
+        return (<ListItem disablePadding>
             <ListItemButton>
                 <ListItemText primary={element.issuerName} />
             </ListItemButton>
-        </ListItem>
+        </ListItem>)
     }
 
     return (
@@ -62,7 +56,7 @@ const BasicList = ({data} : ListProps): JSX.Element => {
                             <ListItemText primary="Trash" />
                         </ListItemButton>
                     </ListItem>
-                    {data.map((elem) => {
+                    {elements.map((elem: Instrument) => {
                         return mapElements(elem);
                     })}
                 </List>

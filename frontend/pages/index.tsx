@@ -9,11 +9,15 @@ import Instruments from "./instruments";
 import BasicList from "../comps/BasicList/BasicList";
 
 
-const Home: NextPage = (props: {data: {isin: string, companyName: string}[]}) => {
 
-    console.log(props)
+export interface Instrument {
+    isin: string,
+    issuerName: string
+}
 
 
+
+const Home = (props: {instruments: Instrument[]}) => {
   return (
       <>
           <ResponsiveAppBar />
@@ -24,7 +28,7 @@ const Home: NextPage = (props: {data: {isin: string, companyName: string}[]}) =>
                   <p>Here you will find information of all stocks shorted above 2 %.</p>
                   <div className="hero-content"></div>
               </div>
-              <BasicList data={props.data} />
+              <BasicList elements={props.instruments} />
           </div>
 
           <Instruments instruments={props} />
@@ -39,15 +43,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const url = process.env.API_URL + 'api/instruments'
     const res = await fetch(url)
 
-    var data = "Empty data";
-
+    let instruments : Instrument[] = []
     if(res.status == 200) {
-        data = await res.json()
+        instruments = await res.json()
     } else {
-        data = "Some form of error, sry"
+        console.log("Error in request")
     }
 
-    // console.log(data)
+    return { props: { instruments } }
 
-    return { props: { data } }
+
 }
