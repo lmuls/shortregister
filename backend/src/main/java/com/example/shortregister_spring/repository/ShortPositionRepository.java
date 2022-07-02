@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface ShortPositionRepository extends JpaRepository<ShortPosition, Integer> {
     ShortPosition getByShorterAndInstrumentAndActive(Shorter shorter, Instrument instrument, boolean active);
+    List<ShortPosition> getByInstrument(Instrument instrument);
     ShortPosition getDistinctTopByShorterAndInstrumentOrderByClosed(Shorter shorter, Instrument instrument);
     boolean existsByShorterAndInstrumentAndClosedIsBefore(Shorter shorter, Instrument instrument, Date date);
     ShortPosition getByShorterAndInstrumentAndOpened(Shorter shorter, Instrument instrument, Date date);

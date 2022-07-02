@@ -42,24 +42,24 @@ public class ApiController {
     @Autowired
     InstrumentRepository instrumentRepository;
 
+    @Autowired
+    InstrumentService instrumentService;
+
 
     @GetMapping("/instruments")
     public List<InstrumentDto> listInstruments() {
-        return instrumentRepository.findAll().stream().map(InstrumentDto::convertEntityToDto).collect(Collectors.toList());
+        return instrumentService.listInstruments();
     }
 
     @GetMapping("/instrument/{isin}")
-    public ResponseEntity<Instrument> getInstrumentById(@PathVariable(value="isin") String isin) {
+    public ResponseEntity<InstrumentDto> getInstrumentById(@PathVariable(value="isin") String isin) {
         try {
-            Instrument instrument = instrumentRepository.getById(isin);
-
-            return new ResponseEntity<>(instrument, HttpStatus.OK);
+            return new ResponseEntity<InstrumentDto>(instrumentService.getInstrument(isin), HttpStatus.OK);
         } catch(Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 
     @GetMapping("/shorters")

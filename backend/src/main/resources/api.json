@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Shortregister Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/instrument": {
+      "get": {
+        "description": "Get instrument details",
+        "operationId": "getInstrument",
+        "responses": {
+          "200": {
+            "description": "An instrument object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref":"#/components/schemas/InstrumentDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "InstrumentDTO": {
+        "type": "object",
+        "properties": {
+          "isin":{
+            "type": "string"
+          },
+          "issuerName":{
+            "type": "string"
+          }
+        },
+        "required": [
+          "isin",
+          "string"
+        ]
+      }
+    }
+  }
+}

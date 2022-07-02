@@ -51,8 +51,14 @@ public class ShortPosition {
         return this.shorter.getCompanyName();
     }
 
+    public List<ShortPositionHistory> getShortPositionHistories() {
+        List<ShortPositionHistory> shortPositions = this.shortPositionHistories;
+        shortPositions.sort((x, y) -> y.getDate().compareTo(x.getDate()));
 
-//    public Date getClosed() {
+        return shortPositionHistories;
+    }
+
+    //    public Date getClosed() {
 //        return this.closed;
 //    }
 //

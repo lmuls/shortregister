@@ -1,4 +1,4 @@
-package com.example.shortregister_spring.controller;
+package com.example.shortregister_spring.batch;
 
 import com.example.shortregister_spring.model.Instrument;
 import com.example.shortregister_spring.model.ShortPosition;
@@ -17,12 +17,11 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @RestController
-public class GetDataController {
+public class ImportData {
 
     @Autowired
     InstrumentRepository instrumentRepository;
@@ -36,6 +35,19 @@ public class GetDataController {
     @Autowired
     ShortPositionHistoryRepository shortPositionHistoryRepository;
 
+    @GetMapping("/get-data")
+    public void getExternalData() {
+        String uri = "https://ssr.finanstilsynet.no/api/v2/instruments";
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        Gson g = new Gson();
+        DataImportDto[] dataImport = g.fromJson(response.getBody(), DataImportDto[].class);
+
+        for(int i = 0; i < dataImport.length; i++) {
+            parseInstance(dataImport[i]);
+        }
+    }
 
     public int parseInstance(DataImportDto o) {
         try {
@@ -137,30 +149,8 @@ public class GetDataController {
             System.out.println(e);
             return 500;
         }
-
     }
 
 
-    @GetMapping("/get-data")
-    public String getExternalData() {
-        String uri = "https://ssr.finanstilsynet.no/api/v2/instruments";
-        RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
-
-        Gson g = new Gson();
-
-        DataImportDto[] dataImport = g.fromJson(response.getBody(), DataImportDto[].class);
-
-        for(int i = 0; i < dataImport.length; i++) {
-            parseInstance(dataImport[i]);
-        }
-
-        return dataImport[0].toString();
-
-
-//        Object[] objects = restTemplate.getForObject(uri, Object[].class);
-//        Object obj1 = objects[0];
-//        return List.of(obj1);
-    }
 }
