@@ -13,7 +13,6 @@ export async function getStaticPaths() {
 
     const json = await res.json()
 
-
     const paths = json.map((instrument: {isin: string, issuerName: string, shortPositionDtos: object[]}) => {
         return {params: {instrument: instrument.isin}}
     })

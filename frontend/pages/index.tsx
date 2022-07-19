@@ -1,37 +1,31 @@
 
 import type { NextPage, GetServerSideProps } from 'next'
-import ResponsiveAppBar from "../comps/Navbar";
+import NavArea from "../comps/NavArea";
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 import heroImg from '../public/115.jpg'
-import Instruments from "./instruments";
+import Instrumenter, {Instrument} from "./instrumenter";
 import BasicList from "../comps/BasicList/BasicList";
 
 
 
-export interface Instrument {
-    isin: string,
-    issuerName: string
-}
 
 
 
 const Home = (props: {instruments: Instrument[]}) => {
   return (
       <>
-          <ResponsiveAppBar />
+          {/*<Image src={heroImg} alt={"Cartonish image of a bull and a bear"} priority/>*/}
           <div id={styles.mainCont} >
-              <Image src={heroImg} alt={"Cartonish image of a bull and a bear"} priority/>
+
               <div className={styles.heroCont}>
                   <h1>Welcome to the Short Register for OSEBX</h1>
                   <p>Here you will find information of all stocks shorted above 2 %.</p>
                   <div className="hero-content"></div>
               </div>
-              <BasicList elements={props.instruments} />
+              {/*<BasicList elements={props.instruments} />*/}
           </div>
-
-          <Instruments instruments={props} />
       </>
   )
 }
@@ -39,7 +33,6 @@ const Home = (props: {instruments: Instrument[]}) => {
 export default Home
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    console.log(process.env.API_URL)
     const url = process.env.API_URL + 'api/instruments'
     const res = await fetch(url)
 
@@ -51,6 +44,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     return { props: { instruments } }
-
-
 }

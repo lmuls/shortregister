@@ -16,7 +16,6 @@ import {Instrument} from "../../pages";
 const BasicList = ({elements} : {elements: Instrument[] }): JSX.Element => {
 
     function mapElements(element: Instrument): JSX.Element {
-        console.log(element)
         return (<ListItem disablePadding>
             <ListItemButton>
                 <ListItemText primary={element.issuerName} />

@@ -1,0 +1,55 @@
+
+@import '../styles/colors';
+
+$navAreaHeight: 7%;
+$navAreaWidth: 7%;
+$border-radius: 20px;
+
+
+#mainFrame {
+  width: 100vw;
+
+  @media (min-width: 768px) {
+    height: 100vh;
+  }
+}
+
+#navArea {
+  background: #007991;  /* fallback for old browsers */
+  background: linear-gradient(145deg, $ocean-green, $blue-ncs);
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .topNavLeft {
+    display: flex;
+    align-items: center;
+
+    .links {
+      display: flex;
+      z-index: 100;
+
+      .link {
+        margin: 1rem;
+        font-size: 1.5rem;
+        text-shadow: 2.5px 2.5px 2.5px rgba(#000, 0.4);
+      }
+    }
+  }
+
+
+
+  #pageContents {
+    border-radius: $border-radius;
+    background: linear-gradient(to right, #d1913c, #ffd194);
+
+    @media (min-width: 768px) {
+      position: absolute;
+      top: $navAreaHeight;
+      left: $navAreaWidth;
+      height: 90%;
+      width: 90%;
+      box-shadow: 5px 5px 5px rgba(black, 0.6);
+    }
+  }
+}
