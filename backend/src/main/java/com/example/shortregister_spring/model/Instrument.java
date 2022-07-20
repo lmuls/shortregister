@@ -28,7 +28,9 @@ public class Instrument {
     }
 
     public List<ShortPosition> getShortPositions() {
-        return this.shortPositions;
+        List<ShortPosition> shortPositions = this.shortPositions;
+        shortPositions.sort((x ,y) -> y.getOpened().compareTo(x.getOpened()));
+        return shortPositions;
     }
 
     public String getIssuerName() {

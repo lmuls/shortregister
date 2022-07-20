@@ -52,9 +52,8 @@ public class ShortPosition {
     }
 
     public List<ShortPositionHistory> getShortPositionHistories() {
-        List<ShortPositionHistory> shortPositions = this.shortPositionHistories;
-        shortPositions.sort((x, y) -> y.getDate().compareTo(x.getDate()));
-
+        List<ShortPositionHistory> shortPositionsHistory = this.shortPositionHistories;
+        shortPositionsHistory.sort((x, y) -> y.getDate().compareTo(x.getDate()));
         return shortPositionHistories;
     }
 

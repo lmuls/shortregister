@@ -1,26 +1,33 @@
 import React from "react";
-import Link from "next/link";
 import {GetServerSideProps} from "next";
+import CollapsibleTable from "../comps/Table";
+import style from "../styles/Instrumenter.module.scss"
 
+export interface ShortPositionHistoryDto {
+    date: string;
+    shares: number;
+    shortPercent: number;
+}
+
+export interface ShortPosition {
+    issuerName: string;
+    companyName: string;
+    active: boolean;
+    opened: string;
+    closed: string;
+    history: ShortPositionHistoryDto[]
+}
 
 export interface Instrument {
     isin: string,
     issuerName: string
+    shortPositions: ShortPosition[];
 }
 
-function Instrumenter(props: {instruments: Instrument[]}) {
+function Instrumenter({instruments}: {instruments: Instrument[]}) {
     return (
-        <div className="instruments">
-            <ul>
-                {props && props.instruments.length > 0 && props.instruments.map(instrument => {
-                    return (
-                        <li key={instrument.isin}>
-                            <Link href={`/instrumenter/${encodeURIComponent(instrument.isin)}`}>
-                                <a>{instrument.issuerName}</a>
-                            </Link>
-                        </li>)
-                })}
-            </ul>
+        <div className={style.instruments}>
+            <CollapsibleTable instruments={instruments} />
         </div>
     )
 }

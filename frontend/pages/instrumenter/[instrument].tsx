@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({params}: {params: {instrument: string}}) {
-    const url = process.env.API_URL+ "api/instrument/" + params.instrument;
+    const url = process.env.API_URL+ "api/instruments/" + params.instrument;
     const res = await fetch(url)
     const instrumentInfo = await res.json();
 

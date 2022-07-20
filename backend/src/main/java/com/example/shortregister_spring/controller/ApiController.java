@@ -51,7 +51,7 @@ public class ApiController {
         return instrumentService.listInstruments();
     }
 
-    @GetMapping("/instrument/{isin}")
+    @GetMapping("/instruments/{isin}")
     public ResponseEntity<InstrumentDto> getInstrumentById(@PathVariable(value="isin") String isin) {
         try {
             return new ResponseEntity<InstrumentDto>(instrumentService.getInstrument(isin), HttpStatus.OK);
