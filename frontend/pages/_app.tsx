@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import NavArea from "../comps/NavArea";
 import { ThemeProvider, createTheme } from "@mui/material/styles";

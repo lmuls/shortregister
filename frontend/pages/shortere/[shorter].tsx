@@ -2,27 +2,28 @@ import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Instrument } from "../instrumenter";
 import { slugify } from "../../util/mainUtils";
+import { Shorter } from "../shortere";
 
 export function instrument({
-  instrumentInfo,
+  shorterInfo,
 }: {
-  instrumentInfo: {
-    isin: string;
-    issuerName: string;
+  shorterInfo: {
+    id: number;
+    companyName: string;
     shortPositionDtos: object[];
   };
 }) {
-  return <h1>{instrumentInfo.issuerName}</h1>;
+  return <h1>{shorterInfo.companyName}</h1>;
 }
 
 export async function getStaticPaths() {
-  const url = process.env.API_URL + "api/instruments";
+  const url = process.env.API_URL + "api/shorters";
   const res = await fetch(url);
 
   const json = await res.json();
 
-  const paths = json.map((instrument: Instrument) => {
-    return { params: { instrument: slugify(instrument.issuerName) } };
+  const paths = json.map((shorter: Shorter) => {
+    return { params: { shorter: slugify(shorter.companyName) } };
   });
 
   return { paths: paths, fallback: false };
@@ -31,13 +32,13 @@ export async function getStaticPaths() {
 export async function getStaticProps({
   params,
 }: {
-  params: { instrument: string };
+  params: { shorter: string };
 }) {
-  const url = process.env.API_URL + "api/instruments/" + params.instrument;
+  const url = process.env.API_URL + "api/shorters/" + params.shorter;
   const res = await fetch(url);
-  const instrumentInfo = await res.json();
+  const shorterInfo = await res.json();
 
-  return { props: { instrumentInfo } };
+  return { props: { shorterInfo } };
 }
 
 export default instrument;

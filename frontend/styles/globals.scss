@@ -1,3 +1,5 @@
+@import 'colors';
+
 html,
 body {
   padding: 0;
@@ -19,5 +21,17 @@ a {
 
 li {
   list-style: none;
+}
+
+.active {
+  color: $bitter-lime;
+}
+
+.inactive {
+  color: #284B63;
+}
+
+.instrument-name {
+    font-size: 1.6rem;
 }
 

@@ -51,10 +51,12 @@ public class ApiController {
         return instrumentService.listInstruments();
     }
 
-    @GetMapping("/instruments/{isin}")
-    public ResponseEntity<InstrumentDto> getInstrumentById(@PathVariable(value="isin") String isin) {
+    @GetMapping("/instruments/{issuerName}")
+    public ResponseEntity<InstrumentDto> getInstrumentByIssuerName(@PathVariable(value="issuerName") String issuerName) {
+        issuerName = issuerName.replaceAll("-", " ");
+        System.out.println(issuerName);
         try {
-            return new ResponseEntity<InstrumentDto>(instrumentService.getInstrument(isin), HttpStatus.OK);
+            return new ResponseEntity<InstrumentDto>(instrumentService.getInstrumentByIssuerName(issuerName), HttpStatus.OK);
         } catch(Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,11 +69,11 @@ public class ApiController {
         return shorterRepository.findAll().stream().map(ShorterDto::convertEntityToDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/shorter/{id}")
-    public ResponseEntity<Shorter> getShorterById(@PathVariable(value="id") int id) {
+    @GetMapping("/shorters/{companyName}")
+    public ResponseEntity<ShorterDto> getShorterByCompanyName(@PathVariable(value="companyName") String companyName) {
+        companyName = companyName.replaceAll("-", " ");
         try {
-            Shorter shorter = shorterRepository.getById(id);
-
+            ShorterDto shorter = ShorterDto.convertEntityToDto(shorterRepository.getByCompanyName(companyName));
             return new ResponseEntity<>(shorter, HttpStatus.OK);
         } catch(Exception e) {
             System.out.println(e);

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface InstrumentRepository extends JpaRepository<Instrument, String> {
+    Instrument getInstrumentByIssuerName(String issuerName);
     List<Instrument> findInstrumentByIssuerName(String issuerName);
     Instrument getInstrumentByIsin(String isin);
 }

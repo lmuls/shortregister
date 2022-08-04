@@ -17,6 +17,11 @@ public class InstrumentService {
     public InstrumentDto getInstrument(String isin) {
         return InstrumentDto.to(instrumentRepository.getById(isin));
     }
+    public InstrumentDto getInstrumentByIssuerName(String issuerName) {
+        return InstrumentDto.to(instrumentRepository.getInstrumentByIssuerName(issuerName));
+    }
+
+
 
     public List<InstrumentDto> listInstruments() {
         return instrumentRepository.findAll().stream().map(InstrumentDto::to).collect(Collectors.toList());
