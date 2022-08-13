@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./NavAreaStyle.module.scss";
+import styles from "../styles/NavAreaStyle.module.scss";
 import { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,6 +26,7 @@ export default function NavArea({ children }: { children: ReactNode }) {
             <Link href={"/"}>
               <a>
                 <Image
+                  // style={"margin-top: 1rem"}
                   src={"/teddy-bear_1f9f8.png"}
                   width={"100px"}
                   height={"100px"}

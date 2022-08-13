@@ -10,7 +10,7 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import {types} from "util";
 import {JSXElement} from "@babel/types";
-import {Instrument} from "../../pages";
+import {Instrument} from "../../pages/instrumenter";
 
 
 const BasicList = ({elements} : {elements: Instrument[] }): JSX.Element => {

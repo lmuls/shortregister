@@ -16,7 +16,7 @@ import { Instrument } from "../pages/instrumenter";
 import { ShortPosition } from "../pages/instrumenter";
 import Link from "next/link";
 import { Shorter } from "../pages/shortere";
-import { slugify } from "../util/mainUtils";
+import {formatDate, slugify} from "../util/mainUtils";
 
 export interface TableElement {
   name: string;
@@ -27,7 +27,7 @@ export interface TableElement {
 function Row({ name, shortPositions, isInstrument }: TableElement) {
   const [open, setOpen] = React.useState(false);
   const active = shortPositions.filter((x) => x.active).length > 0;
-  const lastAction = shortPositions[0].history[0].date;
+  const lastAction = formatDate(shortPositions[0].history[0].date);
 
   return (
     <React.Fragment>
@@ -100,8 +100,8 @@ function Row({ name, shortPositions, isInstrument }: TableElement) {
                           </Link>
                         )}
                       </TableCell>
-                      <TableCell>{historyRow.opened}</TableCell>
-                      <TableCell>{historyRow.closed}</TableCell>
+                      <TableCell>{formatDate(historyRow.opened)}</TableCell>
+                      <TableCell>{formatDate(historyRow.closed)}</TableCell>
                       <TableCell align="right">
                         {historyRow.history[0].shortPercent}
                       </TableCell>

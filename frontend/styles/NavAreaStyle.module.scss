@@ -1,5 +1,5 @@
 
-@import '../styles/colors';
+@import 'styles/colors';
 
 $navAreaHeight: 7%;
 $navAreaWidth: 7%;
@@ -8,6 +8,7 @@ $border-radius: 20px;
 
 #mainFrame {
   width: 100vw;
+  height: 100vh;
 
   @media (min-width: 768px) {
     height: 100vh;
@@ -24,6 +25,7 @@ $border-radius: 20px;
   .topNavLeft {
     display: flex;
     align-items: center;
+    padding-top: .5rem;
 
     .links {
       display: flex;
@@ -42,14 +44,20 @@ $border-radius: 20px;
   #pageContents {
     border-radius: $border-radius;
     background: linear-gradient(to right, #d1913c, #ffd194);
-    overflow-y: scroll;
+    //overflow-y: scroll;
+    height: 75%;
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: 1rem;
 
     @media (min-width: 768px) {
-      position: absolute;
-      top: $navAreaHeight;
-      left: $navAreaWidth;
-      height: 90%;
-      width: 90%;
+      //position: absolute;
+      //top: $navAreaHeight;
+      //left: $navAreaWidth;
+
+
+      //min-height: 80%;
+      //width: 70%;
       box-shadow: 5px 5px 5px rgba(black, 0.6);
     }
   }

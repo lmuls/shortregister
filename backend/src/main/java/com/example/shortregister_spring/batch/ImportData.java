@@ -44,8 +44,8 @@ public class ImportData {
         Gson g = new Gson();
         DataImportDto[] dataImport = g.fromJson(response.getBody(), DataImportDto[].class);
 
-        for(int i = 0; i < dataImport.length; i++) {
-            parseInstance(dataImport[i]);
+        for (DataImportDto dataImportDto : dataImport) {
+            parseInstance(dataImportDto);
         }
     }
 

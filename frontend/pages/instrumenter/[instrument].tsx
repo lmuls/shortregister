@@ -1,18 +1,26 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
+import StackedAreaChart from "../../comps/StackedAreaChart";
 import { Instrument } from "../instrumenter";
-import { slugify } from "../../util/mainUtils";
+import {parseShortPositions, slugify} from "../../util/mainUtils";
+import style from "./Instrument.module.scss"
 
 export function instrument({
   instrumentInfo,
 }: {
-  instrumentInfo: {
-    isin: string;
-    issuerName: string;
-    shortPositionDtos: object[];
-  };
+  instrumentInfo: Instrument;
 }) {
-  return <h1>{instrumentInfo.issuerName}</h1>;
+
+  return (
+      <section id={style.detailSection}>
+        <div className={style.header}>
+          <h1>{instrumentInfo.issuerName}</h1>
+        </div>
+        <div className={style.kpi}></div>
+        <div className={style.chart}><StackedAreaChart data={instrumentInfo.shortPositions} /></div>
+        <div className={style.table}></div>
+      </section>
+  )
 }
 
 export async function getStaticPaths() {
