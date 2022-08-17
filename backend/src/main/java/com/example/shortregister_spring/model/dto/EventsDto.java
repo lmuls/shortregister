@@ -1,5 +1,7 @@
 package com.example.shortregister_spring.model.dto;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 

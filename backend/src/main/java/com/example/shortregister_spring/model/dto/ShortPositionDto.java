@@ -3,7 +3,7 @@ package com.example.shortregister_spring.model.dto;
 import com.example.shortregister_spring.model.ShortPosition;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,8 +12,8 @@ public class ShortPositionDto {
     String issuerName;
     String companyName;
     boolean active;
-    Date opened;
-    Date closed;
+    OffsetDateTime opened;
+    OffsetDateTime closed;
     List<ShortPositionHistoryDto> history;
 
     public static ShortPositionDto to(ShortPosition shortPosition) {

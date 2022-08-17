@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
@@ -27,10 +27,10 @@ public class ShortPosition {
     private Shorter shorter;
 
     @Column(name="opened")
-    private Date opened;
+    private OffsetDateTime opened;
 
     @Column(name="closed")
-    private Date closed;
+    private OffsetDateTime closed;
 
     @Column(name="active")
     private boolean active;
@@ -40,7 +40,7 @@ public class ShortPosition {
 
     public ShortPosition() {}
 
-    public ShortPosition(Instrument instrument, Shorter shorter, Date date) {
+    public ShortPosition(Instrument instrument, Shorter shorter, OffsetDateTime date) {
             this.instrument = instrument;
             this.shorter = shorter;
             this.opened = date;
@@ -57,7 +57,7 @@ public class ShortPosition {
         return shortPositionHistories;
     }
 
-    //    public Date getClosed() {
+    //    public OffsetDateTime getClosed() {
 //        return this.closed;
 //    }
 //
@@ -65,7 +65,7 @@ public class ShortPosition {
 //        return this.shortPositionHistories;
 //    }
 
-    public ShortPosition close(Date date) {
+    public ShortPosition close(OffsetDateTime date) {
         this.active = false;
         this.closed = date;
         return this;

@@ -14,7 +14,10 @@ import java.util.stream.Collectors;
 @Service
 public class ShortPositionService {
     private final ShortPositionRepository shortPositionRepository;
-    private final ShortPositionHistoryRepository shortPositionHistoryRepository;
+
+    public List<ShortPosition> getShortPositions(String issuerName) {
+        return shortPositionRepository.getByInstrument_IssuerName(issuerName);
+    }
 
     public List<ShortPositionDto> listShortPositionsForIssuer(String isin) {
         List<ShortPosition> shortPositions = shortPositionRepository.getByInstrument(new Instrument(isin, ""));
@@ -24,6 +27,5 @@ public class ShortPositionService {
 
     public ShortPositionService(ShortPositionRepository shortPositionRepository, ShortPositionHistoryRepository shortPositionHistoryRepository) {
         this.shortPositionRepository = shortPositionRepository;
-        this.shortPositionHistoryRepository = shortPositionHistoryRepository;
     }
 }

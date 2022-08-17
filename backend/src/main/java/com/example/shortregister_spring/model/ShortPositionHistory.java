@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -25,7 +25,7 @@ public class ShortPositionHistory {
     private ShortPosition shortPosition;
 
     @Column(name = "date")
-    private Date date;
+    private OffsetDateTime date;
 
     @Column(name = "shares")
     private int shares;
@@ -33,11 +33,11 @@ public class ShortPositionHistory {
     @Column(name = "short_percent")
     private double shortPercent;
 
-    public Date getDate() {
+    public OffsetDateTime getDate() {
         return this.date;
     }
 
-    public ShortPositionHistory(ShortPosition shortPosition, Date date, int shares, double shortPercent) {
+    public ShortPositionHistory(ShortPosition shortPosition, OffsetDateTime date, int shares, double shortPercent) {
         this.shortPosition = shortPosition;
         this.date = date;
         this.shares = shares;

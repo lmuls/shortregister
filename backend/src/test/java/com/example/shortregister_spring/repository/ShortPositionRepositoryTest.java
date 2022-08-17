@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,9 +35,7 @@ public class ShortPositionRepositoryTest {
         assertNotNull(instrument);
         assertNotNull(shorter);
 
-        Date myDate = new Date();
-
-        boolean bool1 = shortPositionRepository.existsByShorterAndInstrumentAndClosedBefore(shorter, instrument, myDate);
+        boolean bool1 = shortPositionRepository.existsByShorterAndInstrumentAndClosedBefore(shorter, instrument, OffsetDateTime.now());
         assertTrue(bool1);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.shortregister_spring.model.dto;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 public class ActivePositionsDto {

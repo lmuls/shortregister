@@ -3,11 +3,11 @@ package com.example.shortregister_spring.model.dto;
 import com.example.shortregister_spring.model.ShortPositionHistory;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 @Data
 public class ShortPositionHistoryDto {
-    Date date;
+    OffsetDateTime date;
     int shares;
     double shortPercent;
 

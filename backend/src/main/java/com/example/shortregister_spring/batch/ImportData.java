@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
 
 @RestController
 public class ImportData {
@@ -69,16 +71,12 @@ public class ImportData {
                 List<ShortPosition> registeredActivePositions = shortPositionRepository.findAllByActiveAndInstrument(true, _instrument);
                 int nRegisteredActivePositions = registeredActivePositions.size();
 
-                System.out.println(_instrument.getIssuerName() + " Has " + nRegisteredActivePositions + " registered active pos and " + nActivePositions + " no of new active pos. " + event.date + "\n");
-
                 if (nActivePositions < nRegisteredActivePositions) {
                     for(ShortPosition shortPos : registeredActivePositions) {
                         if(!activePositions.contains(shortPos.getShorterCompanyName()) ) {
-                            System.out.println(shortPos.getShorterCompanyName() + " was deleted! +\n");
-                            shortPos.close(event.date);
+                            shortPos.close(event.date.toInstant().atOffset(ZoneOffset.UTC));
                         }
                     }
-                    System.out.println("NO POSITIONS NOT EQUAL");
                 }
 
                 for(var activePosition: event.activePositions) {
@@ -95,7 +93,7 @@ public class ImportData {
 //                        List<ShortPositionHistory> shortPositionHistories = newestPos.getShortPositionHistories();
 //
 //                        shortPositionHistories.sort((a,b) -> b.getDate().compareTo(a.getDate()));
-//                        Date newestShortPositionHistoryEntry = shortPositionHistories.get(0).getDate();
+//                        OffsetDateTime newestShortPositionHistoryEntry = shortPositionHistories.get(0).getDate();
 //                        System.out.println("Newest date is: " + newestShortPositionHistoryEntry + ". activePos date is: " + activePosition.date);
 //                        if(activePosition.date.compareTo(newestShortPositionHistoryEntry) < 0) {
 //                            System.out.println("Going to the top");
@@ -125,20 +123,20 @@ public class ImportData {
 //                    }
 
                     if(!shortPositionRepository.existsByShorterAndInstrumentAndActive(shorter, _instrument, true)) {
-                            shortPosition = shortPositionRepository.save(new ShortPosition(_instrument, shorter, activePosition.date));
+                            shortPosition = shortPositionRepository.save(new ShortPosition(_instrument, shorter, activePosition.date.toInstant().atOffset(ZoneOffset.UTC)));
                     } else {
                         shortPosition = shortPositionRepository.getByShorterAndInstrumentAndActive(shorter, _instrument, true);
                     }
 
                     ShortPositionHistory shortPositionHistory;
-                    if(!shortPositionHistoryRepository.existsByDateAndShortPosition(activePosition.date, shortPosition)) {
-                        shortPositionHistory = shortPositionHistoryRepository.save(new ShortPositionHistory(shortPosition, activePosition.date, activePosition.shares, activePosition.shortPercent));
+                    if(!shortPositionHistoryRepository.existsByDateAndShortPosition(activePosition.date.toInstant().atOffset(ZoneOffset.UTC), shortPosition)) {
+                        shortPositionHistory = shortPositionHistoryRepository.save(new ShortPositionHistory(shortPosition, activePosition.date.toInstant().atOffset(ZoneOffset.UTC), activePosition.shares, activePosition.shortPercent));
                     } else {
-                        shortPositionHistory = shortPositionHistoryRepository.getByDateAndShortPosition(activePosition.date, shortPosition);
+                        shortPositionHistory = shortPositionHistoryRepository.getByDateAndShortPosition(activePosition.date.toInstant().atOffset(ZoneOffset.UTC), shortPosition);
                     }
 
                     /* ShortPositionHistory newest entry **/
-                    Date newestDate = shortPositionHistoryRepository.getDistinctFirstByShortPositionOrderByDate(shortPosition).getDate();
+                    OffsetDateTime newestDate = shortPositionHistoryRepository.getDistinctFirstByShortPositionOrderByDate(shortPosition).getDate();
 //                    System.out.println("For " + shorter.getCompanyName() + " and " + _instrument.getIssuerName() + " .The newest date is: " + newestDate);
 
                 }
