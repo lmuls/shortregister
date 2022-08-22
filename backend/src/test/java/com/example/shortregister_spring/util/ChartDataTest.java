@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,13 +31,10 @@ class ChartDataTest {
 
     @Test
     void parse() {
-        List<ShortPosition> shortPositions = shortPositionService.getShortPositions("AKER CARBON CAPTUR");
-        assertThat(shortPositions.size()).isEqualTo(3);
+        List<ShortPosition> shortPositions = shortPositionService.getShortPositions("NORWEGIAN AIR SHUT");
+//        assertThat(shortPositions.size()).isEqualTo(7);
 
-        List<ChartEntryDto> chartEntries = ChartData.parse(shortPositions);
-
-        for(var chartEntry : chartEntries) {
-            System.out.println(chartEntry);
-        }
+        List<Map<String, Object>> chartEntries = ChartData.parse(shortPositions);
+        for(var inst: chartEntries) System.out.println(inst);
     }
 }

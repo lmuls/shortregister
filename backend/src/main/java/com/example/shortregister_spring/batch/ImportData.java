@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -53,22 +54,19 @@ public class ImportData {
 
     public int parseInstance(DataImportDto o) {
         try {
-            Instrument _instrument = new Instrument(o.isin, o.issuerName);
-
-            if( !instrumentRepository.existsById(_instrument.getIsin())) {
-                instrumentRepository.save(new Instrument(o.isin, o.issuerName));
+            Instrument instrument = instrumentRepository.getInstrumentByIsin(o.isin);
+            if(instrument != null) {
+                instrument = instrumentRepository.save(new Instrument(o.isin, o.issuerName));
             }
 
-            o.events.sort((a,b) -> a.date.compareTo(b.date));
+            o.events.sort(Comparator.comparing(a -> a.date));
 
             for(var event : o.events) {
                 List<String> activePositions = new ArrayList<>();
                 event.activePositions.forEach(x -> activePositions.add(x.positionHolder));
 
-                System.out.println(activePositions);
-
                 int nActivePositions = event.activePositions.size();
-                List<ShortPosition> registeredActivePositions = shortPositionRepository.findAllByActiveAndInstrument(true, _instrument);
+                List<ShortPosition> registeredActivePositions = shortPositionRepository.findAllByActiveAndInstrument(true, instrument);
                 int nRegisteredActivePositions = registeredActivePositions.size();
 
                 if (nActivePositions < nRegisteredActivePositions) {
@@ -88,44 +86,12 @@ public class ImportData {
                         shorter = shorterRepository.getByCompanyName(activePosition.positionHolder);
                     }
 
-//                    try {
-//                        ShortPosition newestPos = shortPositionRepository.getDistinctTopByShorterAndInstrumentOrderByClosed(shorter, _instrument);
-//                        List<ShortPositionHistory> shortPositionHistories = newestPos.getShortPositionHistories();
-//
-//                        shortPositionHistories.sort((a,b) -> b.getDate().compareTo(a.getDate()));
-//                        OffsetDateTime newestShortPositionHistoryEntry = shortPositionHistories.get(0).getDate();
-//                        System.out.println("Newest date is: " + newestShortPositionHistoryEntry + ". activePos date is: " + activePosition.date);
-//                        if(activePosition.date.compareTo(newestShortPositionHistoryEntry) < 0) {
-//                            System.out.println("Going to the top");
-//                            continue;
-//                        }
-//
-//                    } catch(Exception e) {
-//                        System.out.println(e);
-//                    }
-
                     ShortPosition shortPosition;
-                    /* Short position relation exists? */
 
-//                    if(!shortPositionRepository.existsByShorterAndInstrument(shorter, _instrument)) {
-//                        if(shortPositionRepository.existsByShorterAndInstrumentAndActive(shorter, _instrument, true)) {
-//                            shortPosition = shortPositionRepository.getByShorterAndInstrumentAndActive(shorter, _instrument, true);
-//                        } else {
-//                            ShortPosition newestPos = shortPositionRepository.getDistinctTopByShorterAndInstrumentOrderByClosed(shorter, _instrument);
-//                            if(newestPos.getClosed().compareTo(activePosition.date) < 0) {
-//                                shortPosition = shortPositionRepository.save(new ShortPosition(_instrument, shorter, activePosition.date));
-//                            } else {
-//                                shortPosition = shortPositionRepository.getByShorterAndInstrumentAndActive(shorter, _instrument, true);
-//                            }
-//                        }
-//                    } else {
-//                        shortPosition = shortPositionRepository.save(new ShortPosition(_instrument, shorter, activePosition.date));
-//                    }
-
-                    if(!shortPositionRepository.existsByShorterAndInstrumentAndActive(shorter, _instrument, true)) {
-                            shortPosition = shortPositionRepository.save(new ShortPosition(_instrument, shorter, activePosition.date.toInstant().atOffset(ZoneOffset.UTC)));
+                    if(!shortPositionRepository.existsByShorterAndInstrumentAndActive(shorter, instrument, true)) {
+                        shortPosition = shortPositionRepository.save(new ShortPosition(instrument, shorter, activePosition.date.toInstant().atOffset(ZoneOffset.UTC)));
                     } else {
-                        shortPosition = shortPositionRepository.getByShorterAndInstrumentAndActive(shorter, _instrument, true);
+                        shortPosition = shortPositionRepository.getByShorterAndInstrumentAndActive(shorter, instrument, true);
                     }
 
                     ShortPositionHistory shortPositionHistory;
@@ -137,7 +103,7 @@ public class ImportData {
 
                     /* ShortPositionHistory newest entry **/
                     OffsetDateTime newestDate = shortPositionHistoryRepository.getDistinctFirstByShortPositionOrderByDate(shortPosition).getDate();
-//                    System.out.println("For " + shorter.getCompanyName() + " and " + _instrument.getIssuerName() + " .The newest date is: " + newestDate);
+//                    System.out.println("For " + shorter.getCompanyName() + " and " + instrument.getIssuerName() + " .The newest date is: " + newestDate);
 
                 }
             }
