@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class ChartData {
     public static List<Map<String, Object>> parse(List<ShortPosition> shortPositions) {
-        SortedSet<ChartEntryDto> res = new TreeSet<>();
+        List<ChartEntryDto> res = new ArrayList<>();
         for (ShortPosition shortPosition : shortPositions) {
             OffsetDateTime opened = shortPosition.getOpened().minusDays(1);
 
@@ -44,12 +44,12 @@ public class ChartData {
         List<Map<String, Object>> newRes = new ArrayList<>();
 
         for(var inst : res) {
-            if(!newRes.stream().anyMatch(x -> x.get("date").equals(inst.getDate().toLocalDate()))) {
+            if(newRes.stream().noneMatch(x -> x.get("date").equals(inst.getDate().toLocalDate()))) {
                 Map<String, Object> newMap = new HashMap<>();
                 newMap.put("date", inst.getDate().toLocalDate());
                 newMap.put(inst.getCompanyName(), inst.getShares());
                 newRes.add(newMap);
-                System.out.println("New entry: " + inst.getCompanyName());
+//                System.out.println("New entry: " + inst.getCompanyName());
             } else {
                 for(var inst2: newRes) {
                     if(inst2.get("date").equals(inst.getDate().toLocalDate())) {

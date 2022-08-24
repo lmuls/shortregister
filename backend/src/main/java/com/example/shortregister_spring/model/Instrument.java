@@ -1,12 +1,17 @@
 package com.example.shortregister_spring.model;
 
 import com.fasterxml.jackson.annotation.*;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.util.List;
 
 
+
+
 @Entity
+@NamedNativeQuery(name="Instrument.getLatestUpdate", query="select max(date) from short_position_history inner join short_position sp on sp.id = short_position_history.short_position where instrument = ?1")
+
 @Table(name="instrument")
 public class Instrument {
     @Id

@@ -44,6 +44,6 @@ public class ChartEntryDto implements Comparable<ChartEntryDto>{
 
     @Override
     public int compareTo(ChartEntryDto o) {
-        return this.date.compareTo(o.getDate());
+        return this.companyName.compareTo(o.getCompanyName());
     }
 }

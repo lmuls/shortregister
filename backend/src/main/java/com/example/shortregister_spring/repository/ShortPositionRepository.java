@@ -19,7 +19,7 @@ public interface ShortPositionRepository extends JpaRepository<ShortPosition, In
     boolean existsByShorterAndOpened(Shorter shorter, OffsetDateTime opened);
     boolean existsByShorterAndInstrumentAndOpened(Shorter shorter, Instrument instrument, OffsetDateTime date);
     boolean existsByShorterAndInstrument(Shorter shorter, Instrument instrument);
-    boolean existsByShorterAndInstrumentAndClosedBefore(Shorter shorter, Instrument instrument, OffsetDateTime date);
+    boolean existsByShorterAndInstrumentAndClosedAfter(Shorter shorter, Instrument instrument, OffsetDateTime date);
     boolean existsByShorterAndInstrumentAndActive(Shorter shorter, Instrument instrument, boolean active);
     boolean existsByShorterAndInstrumentAndActiveAndOpened(Shorter shorter, Instrument instrument, boolean active, OffsetDateTime opened);
     boolean existsByShorterAndInstrumentAndActiveAndOpenedNot(Shorter shorter, Instrument instrument, boolean active, OffsetDateTime opened);

@@ -2,7 +2,7 @@ package com.example.shortregister_spring.model.dto;
 
 import java.util.List;
 
-public class DataImportDto {
+public class CompanyDto {
 
     public String isin;
     public String issuerName;

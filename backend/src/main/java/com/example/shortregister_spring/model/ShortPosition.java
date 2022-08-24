@@ -65,10 +65,9 @@ public class ShortPosition {
 //        return this.shortPositionHistories;
 //    }
 
-    public ShortPosition close(OffsetDateTime date) {
+    public void close(OffsetDateTime date) {
         this.active = false;
         this.closed = date;
-        return this;
     }
 
     public String toString() {
