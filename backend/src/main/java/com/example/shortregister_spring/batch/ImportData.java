@@ -113,8 +113,8 @@ public class ImportData {
                         shortPosition = shortPositionRepository.getByShorterAndInstrumentAndActive(shorter, instrument, true);
                     }
 
-                    if(!shortPositionHistoryRepository.existsByDateAndShortPosition(activePosition.date.toInstant().atOffset(ZoneOffset.UTC), shortPosition)) {
-                        shortPositionHistoryRepository.save(new ShortPositionHistory(shortPosition, activePosition.date.toInstant().atOffset(ZoneOffset.UTC), activePosition.shares, activePosition.shortPercent));
+                    if(!shortPositionHistoryRepository.existsByDateAndShortPosition(event.date.toInstant().atOffset(ZoneOffset.UTC), shortPosition)) {
+                        shortPositionHistoryRepository.save(new ShortPositionHistory(shortPosition, event.date.toInstant().atOffset(ZoneOffset.UTC), activePosition.shares, activePosition.shortPercent));
                     }
                 }
             }

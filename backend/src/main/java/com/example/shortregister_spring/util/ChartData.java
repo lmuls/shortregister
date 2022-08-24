@@ -19,12 +19,13 @@ public class ChartData {
         for (ShortPosition shortPosition : shortPositions) {
             OffsetDateTime opened = shortPosition.getOpened().minusDays(1);
 
+            List<ShortPositionHistory> histories = shortPosition.getShortPositionHistories();
+
             res.add(new ChartEntryDto(opened, shortPosition.getShorterCompanyName(), 0, 0d));
             if (!shortPosition.isActive()) {
-                res.add(new ChartEntryDto(shortPosition.getClosed().plusDays(1), shortPosition.getShorterCompanyName(), 0, 0d));
+                histories.add(new ShortPositionHistory(shortPosition, shortPosition.getClosed(), 0, 0d));
             }
 
-            List<ShortPositionHistory> histories = shortPosition.getShortPositionHistories();
             histories.sort(Comparator.comparing(ShortPositionHistory::getDate));
             for (int i = 0; i < histories.size(); i++) {
                 ShortPositionHistory shortPositionHistory = histories.get(i);
