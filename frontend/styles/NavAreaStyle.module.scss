@@ -17,7 +17,7 @@ $border-radius: 20px;
 
 #navArea {
   background: #007991;  /* fallback for old browsers */
-  background: linear-gradient(145deg, $ocean-green, $blue-ncs);
+  background: linear-gradient(145deg, $rich-black-fogra-29, $blue-ncs);
   height: 100%;
   width: 100%;
   position: relative;
@@ -43,7 +43,7 @@ $border-radius: 20px;
 
   #pageContents {
     border-radius: $border-radius;
-    background: linear-gradient(to right, #d1913c, #ffd194);
+    background: $rich-black-fogra-29;
     //overflow-y: scroll;
     height: 75%;
     max-width: 95%;

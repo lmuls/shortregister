@@ -34,7 +34,7 @@ class ChartDataTest {
         List<ShortPosition> shortPositions = shortPositionService.getShortPositions("2020 BULKERS");
 //        assertThat(shortPositions.size()).isEqualTo(7);
 
-        List<Map<String, Object>> chartEntries = ChartData.parse(shortPositions);
+        List<Map<String, Object>> chartEntries = ChartData.parse(shortPositions, true);
         for(var inst: chartEntries) System.out.println(inst);
     }
 }

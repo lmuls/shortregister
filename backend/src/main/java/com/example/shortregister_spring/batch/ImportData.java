@@ -58,10 +58,10 @@ public class ImportData {
         Gson g = new Gson();
         CompanyDto[] dataImport = g.fromJson(response.getBody(), CompanyDto[].class);
 
-//        for (CompanyDto companyDto : dataImport[0]) {
-//            parseInstance(companyDto);
-//        }
-        parseInstance(dataImport[0]);
+        for (CompanyDto companyDto : dataImport) {
+            parseInstance(companyDto);
+        }
+//        parseInstance(dataImport);
     }
 
     public void parseInstance(CompanyDto company) {

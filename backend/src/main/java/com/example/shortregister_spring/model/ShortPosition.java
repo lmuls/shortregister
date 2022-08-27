@@ -1,6 +1,7 @@
 package com.example.shortregister_spring.model;
 
 import com.fasterxml.jackson.annotation.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Data
 @Table(name="short_position", uniqueConstraints = @UniqueConstraint(columnNames = {"instrument","shorter", "opened"}))
 public class ShortPosition {
     @Id
@@ -49,6 +51,9 @@ public class ShortPosition {
 
     public String getShorterCompanyName() {
         return this.shorter.getCompanyName();
+    }
+    public String getInstrumentName() {
+        return this.instrument.getIssuerName();
     }
 
     public List<ShortPositionHistory> getShortPositionHistories() {

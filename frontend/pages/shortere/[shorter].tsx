@@ -17,7 +17,7 @@ export function instrument({
 }
 
 export async function getStaticPaths() {
-  const url = process.env.API_URL + "api/shorters";
+  const url = process.env.NEXT_PUBLIC_API_URL + "shorters";
   const res = await fetch(url);
 
   const json = await res.json();
@@ -34,7 +34,7 @@ export async function getStaticProps({
 }: {
   params: { shorter: string };
 }) {
-  const url = process.env.API_URL + "api/shorters/" + params.shorter;
+  const url = process.env.NEXT_PUBLIC_API_URL + "shorters/" + params.shorter;
   const res = await fetch(url);
   const shorterInfo = await res.json();
 

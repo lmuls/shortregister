@@ -32,24 +32,52 @@ const data = [
   },
 ];
 
-export default class StackedAreaChart extends PureComponent<{ data: [] }> {
-  constructor(props) {
-    super(props);
-    const chartData = parseShortPositions(this.props.data);
-    const chartData2 = parse(this.props.data);
+interface ChartDataDto {
+  [key: string]: string;
+}
 
-    const entries = this.props.data.map((shortPosition) => {
-      return shortPosition.companyName;
+interface ChartProps {
+  subject: string;
+}
+
+interface ChartState {
+  subject: string;
+  chartData: ChartDataDto[];
+  entries: string[];
+}
+
+export default class StackedAreaChart extends React.Component<
+  ChartProps,
+  ChartState
+> {
+  state: ChartState = {
+    subject: this.props.subject,
+    chartData: [],
+    entries: [],
+  };
+
+  async componentDidMount() {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "chart-data", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        subject: this.props.subject,
+      }),
     });
+    const chartData: ChartDataDto[] = await res.json();
+    this.setState((state) => ({ chartData: chartData }));
 
-    // this.setState({chartData: chartData})
-    this.state = { chartData: chartData2, entries: entries };
-    console.log(this.props.data);
-  }
-
-  componentDidMount() {
-    // console.log(Object.entries(this.props.data[0]))
-    // console.log(this.state.entries)
+    const entries: string[] = [];
+    chartData.forEach((inst) => {
+      for (const entry of Object.getOwnPropertyNames(inst)) {
+        if (entry !== "date" && !entries.includes(entry)) {
+          entries.push(entry);
+        }
+      }
+    });
+    this.setState((state) => ({ entries: entries }));
   }
 
   render() {
@@ -58,7 +86,7 @@ export default class StackedAreaChart extends PureComponent<{ data: [] }> {
         <AreaChart
           width={500}
           height={400}
-          data={data}
+          data={this.state.chartData}
           margin={{
             top: 10,
             right: 30,
@@ -70,17 +98,18 @@ export default class StackedAreaChart extends PureComponent<{ data: [] }> {
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
-          {/*{this.state.entries.map((entry) => {*/}
-          {/*  return (*/}
-          {/*    <Area*/}
-          {/*      type="monotone"*/}
-          {/*      dataKey={entry}*/}
-          {/*      stackId="1"*/}
-          {/*      stroke="#8884d8"*/}
-          {/*      fill="#8884d8"*/}
-          {/*    />*/}
-          {/*  );*/}
-          {/*})}*/}
+          {this.state.entries.map((entry) => {
+            return (
+              <Area
+                key={entry}
+                type="monotone"
+                dataKey={entry}
+                stackId="1"
+                stroke="#8884d8"
+                fill="#8884d8"
+              />
+            );
+          })}
           <Area
             type="monotone"
             dataKey="pv"

@@ -14,14 +14,15 @@ import java.util.stream.Collectors;
 
 
 public class ChartData {
-    public static List<Map<String, Object>> parse(List<ShortPosition> shortPositions) {
+    public static List<Map<String, Object>> parse(List<ShortPosition> shortPositions, boolean isInstrument) {
         List<ChartEntryDto> res = new ArrayList<>();
         for (ShortPosition shortPosition : shortPositions) {
             OffsetDateTime opened = shortPosition.getOpened().minusDays(1);
-
             List<ShortPositionHistory> histories = shortPosition.getShortPositionHistories();
 
-            res.add(new ChartEntryDto(opened, shortPosition.getShorterCompanyName(), 0, 0d));
+            String name = isInstrument ? shortPosition.getShorterCompanyName()  : shortPosition.getInstrumentName() ;
+
+            res.add(new ChartEntryDto(opened, name, 0, 0d));
             if (!shortPosition.isActive()) {
                 histories.add(new ShortPositionHistory(shortPosition, shortPosition.getClosed(), 0, 0d));
             }
@@ -29,13 +30,13 @@ public class ChartData {
             histories.sort(Comparator.comparing(ShortPositionHistory::getDate));
             for (int i = 0; i < histories.size(); i++) {
                 ShortPositionHistory shortPositionHistory = histories.get(i);
-                res.add(new ChartEntryDto(shortPositionHistory.getDate(), shortPosition.getShorterCompanyName(), shortPositionHistory.getShares(), shortPositionHistory.getShortPercent()));
+                res.add(new ChartEntryDto(shortPositionHistory.getDate(), name, shortPositionHistory.getShares(), shortPositionHistory.getShortPercent()));
 
                 if (i < histories.size() - 1) {
                     OffsetDateTime nextDate = histories.get(i + 1).getDate();
                     OffsetDateTime interimDate = OffsetDateTime.from(shortPositionHistory.getDate()).plusDays(1);
                     while (interimDate.isBefore(nextDate)) {
-                            res.add(new ChartEntryDto(interimDate, shortPosition.getShorterCompanyName(), shortPositionHistory.getShares(), shortPositionHistory.getShortPercent()));
+                            res.add(new ChartEntryDto(interimDate, name, shortPositionHistory.getShares(), shortPositionHistory.getShortPercent()));
                             interimDate = interimDate.plusDays(1);
                         }
                     }
@@ -50,12 +51,10 @@ public class ChartData {
                 newMap.put("date", inst.getDate().toLocalDate());
                 newMap.put(inst.getCompanyName(), inst.getShares());
                 newRes.add(newMap);
-//                System.out.println("New entry: " + inst.getCompanyName());
             } else {
                 for(var inst2: newRes) {
                     if(inst2.get("date").equals(inst.getDate().toLocalDate())) {
                         inst2.put(inst.getCompanyName(), inst.getShares());
-                        System.out.println("Existing entry: " + inst.getCompanyName());
                     }
                 }
             }

@@ -21,7 +21,7 @@ function Shortere({ shorters }: { shorters: Shorter[] }) {
 export default Shortere;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const url = process.env.API_URL + "api/shorters";
+  const url = process.env.NEXT_PUBLIC_API_URL + "shorters";
   const res = await fetch(url);
 
   let shorters: Shorter[] = [];

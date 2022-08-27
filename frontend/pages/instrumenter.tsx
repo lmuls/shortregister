@@ -35,7 +35,8 @@ function Instrumenter({ instruments }: { instruments: Instrument[] }) {
 export default Instrumenter;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const url = process.env.API_URL + "api/instruments";
+  const url = process.env.NEXT_PUBLIC_API_URL + "instruments";
+  console.log(url);
   const res = await fetch(url);
 
   let instruments: Instrument[] = [];

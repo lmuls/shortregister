@@ -6,15 +6,16 @@ import styles from "../styles/Home.module.scss";
 import heroImg from "../public/115.jpg";
 import Instrumenter, { Instrument } from "./instrumenter";
 import BasicList from "../comps/BasicList/BasicList";
+import Pokemon from "../comps/Pokemon";
 
 const Home = (props: { instruments: Instrument[] }) => {
   return (
     <>
-      <Image
-        src={heroImg}
-        alt={"Cartonish image of a bull and a bear"}
-        priority
-      />
+      {/*<Image*/}
+      {/*  src={heroImg}*/}
+      {/*  alt={"Cartonish image of a bull and a bear"}*/}
+      {/*  priority*/}
+      {/*/>*/}
       <div id={styles.mainCont}>
         <div className={styles.heroCont}>
           <h1>Welcome to the Short Register for OSEBX</h1>
@@ -30,7 +31,7 @@ const Home = (props: { instruments: Instrument[] }) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const url = process.env.API_URL + "api/instruments";
+  const url = process.env.NEXT_PUBLIC_API_URL + "instruments";
   const res = await fetch(url);
 
   let instruments: Instrument[] = [];
