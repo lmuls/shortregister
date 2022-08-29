@@ -17,77 +17,16 @@ export function formatDate(string: string) {
   }
 }
 
-export function parse(shortPositions: ShortPosition[]) {
-  let dates = [];
+export const incrementColor = function (color: string) {
+  let colorInt = parseInt(color); // Convert HEX color to integer
+  colorInt += 50;
+  const nColor = colorInt.toString();
 
-  for (const shortPosition of shortPositions) {
-    for (const history of shortPosition.history) {
-      if (!dates.find((x) => x.date === history.date)) {
-        dates.push({ date: history.date });
-      }
-    }
+  nColor.slice(0, 1);
+
+  if (/^#[0-9a-f]{6}$/i.test(nColor)) {
+    // Make sure that HEX is a valid color
+    return nColor;
   }
-
-  for (const object of dates) {
-    for (const shortPosition of shortPositions) {
-      for (const history of shortPosition.history) {
-        if (history.date === object.date) {
-          object[shortPosition.companyName] = history.shares;
-        }
-      }
-    }
-  }
-
-  console.log(dates);
-
-  return dates.sort((a, b) => {
-    if (a.date > b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
-}
-
-export function parseShortPositions(shortPositions: ShortPosition[]) {
-  let res: ChartData[] = [];
-  // console.log(shortPositions);
-
-  for (const shortPosition of shortPositions) {
-    if (!shortPosition.active) {
-      res.push({
-        date: shortPosition.closed,
-        [shortPosition.companyName]: 0,
-      });
-    }
-
-    // if(res) {
-    //   for(const result of res) {
-    //     if (shortPosition.opened > result.date && shortPosition.closed < result.date) {
-    //       result[shortPosition.companyName] =
-    //     }
-    //   }
-    // }
-
-    for (const history of shortPosition.history) {
-      const index = res.findIndex((x) => x.date === history.date);
-      if (index !== -1) {
-        res[index][shortPosition.companyName] = history.shares;
-      } else {
-        const newObj = {
-          date: formatDate(history.date),
-          [shortPosition.companyName]: history.shares,
-        };
-        res.push(newObj);
-      }
-    }
-  }
-  return res;
-}
-
-// function fillBlankDates(res: ChartData[], shortPositions) {
-//
-//   for(const result of res) {
-//     if(result.date > )
-//   }
-// }
+  return color;
+};

@@ -5,6 +5,7 @@ import com.example.shortregister_spring.model.ShortPositionHistory;
 import com.example.shortregister_spring.model.dto.ChartEntryDto;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.TemporalUnit;
@@ -59,6 +60,7 @@ public class ChartData {
                 }
             }
         }
+        newRes.sort(Comparator.comparing(x -> ((LocalDate) x.get("date"))));
         return newRes;
     }
 }

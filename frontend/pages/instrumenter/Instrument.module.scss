@@ -1,3 +1,5 @@
+@import '../../styles/colors';
+
 #detailSection {
   display: flex;
   flex-direction: column;
@@ -10,8 +12,8 @@
 
     .chart {
       grid-row-start: 1;
-      grid-column-start: 2
-
+      grid-column-start: 2;
+      color: $rich-black-fogra-29;
     }
   }
 
