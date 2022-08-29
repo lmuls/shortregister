@@ -16,7 +16,8 @@ import { Instrument } from "../pages/instrumenter";
 import { ShortPosition } from "../pages/instrumenter";
 import Link from "next/link";
 import { Shorter } from "../pages/shortere";
-import {formatDate, slugify} from "../util/mainUtils";
+import { formatDate, slugify } from "../util/mainUtils";
+import { SubTable } from "./SubTable";
 
 export interface TableElement {
   name: string;
@@ -64,54 +65,10 @@ function Row({ name, shortPositions, isInstrument }: TableElement) {
               <Typography variant="h6" gutterBottom component="div">
                 Siste posisjoner
               </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    {isInstrument ? (
-                      <TableCell>Instrument</TableCell>
-                    ) : (
-                      <TableCell>Shorter</TableCell>
-                    )}
-                    <TableCell>Åpnet</TableCell>
-                    <TableCell>Lukket</TableCell>
-                    <TableCell align="right">Andel</TableCell>
-                    <TableCell align="right">Antall</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {shortPositions.slice(0, 3).map((historyRow) => (
-                    <TableRow key={historyRow.opened}>
-                      <TableCell component="th" scope="row">
-                        {!isInstrument ? (
-                          <Link
-                            href={`/instrumenter/${slugify(
-                              historyRow.issuerName
-                            )}`}
-                          >
-                            <a>{historyRow.issuerName}</a>
-                          </Link>
-                        ) : (
-                          <Link
-                            href={`/shortere/${slugify(
-                              historyRow.companyName
-                            )}`}
-                          >
-                            <a>{historyRow.companyName}</a>
-                          </Link>
-                        )}
-                      </TableCell>
-                      <TableCell>{formatDate(historyRow.opened)}</TableCell>
-                      <TableCell>{formatDate(historyRow.closed)}</TableCell>
-                      <TableCell align="right">
-                        {historyRow.history[0].shortPercent}
-                      </TableCell>
-                      <TableCell align="right">
-                        {historyRow.history[0].shares}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <SubTable
+                shortPositions={shortPositions.slice(0, 3)}
+                isInstrument={isInstrument ?? true}
+              />
             </Box>
           </Collapse>
         </TableCell>

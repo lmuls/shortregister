@@ -3,17 +3,39 @@
 #detailSection {
   display: flex;
   flex-direction: column;
+  //overflow: hidden;
 
   @media (min-width: 768px) {
     display: grid;
-    grid-template-columns: 25%;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: 60%;
     height: 100%;
+
+    .header {
+      margin: 2rem;
+
+      h1 {
+        margin: 0;
+        font-size: 4rem;
+
+      }
+    }
+
+    .kpi {
+      margin-left: 0;
+      padding-bottom: 1rem;
+    }
 
     .chart {
       grid-row-start: 1;
       grid-column-start: 2;
       color: $rich-black-fogra-29;
+    }
+
+    .table {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      overflow-y: scroll;
     }
   }
 
