@@ -36,14 +36,6 @@ public class ApiController {
     @Autowired
     ShortPositionRepository shortPositionRepository;
 
-//    private final InstrumentService instrumentService;
-
-
-//    public ApiController(InstrumentService instrumentService) {
-//        this.instrumentService = instrumentService;
-//    }
-
-
     @Autowired
     InstrumentRepository instrumentRepository;
 
@@ -118,33 +110,6 @@ public class ApiController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
-
     }
-
-//    @GetMapping("shorter/{id}")
-//    public ResponseEntity<Shorter> getShorterById(@PathVariable(value = "id") int id) {
-//        Shorter shorter = shorterRepository.getById(id);
-//        System.out.println(shorter.);
-//        return new ResponseEntity<>(shorter, HttpStatus.OK);
-//    }
-
-//    @PostMapping("/instrument")
-//    public ResponseEntity<Instrument> createInstrument(@RequestBody Instrument instrument) {
-//        try {
-//            Instrument _instrument = instrumentRepository.save(new Instrument(instrument.getIsin(), instrument.getIssuerName()));
-//            return new ResponseEntity<>(_instrument, HttpStatus.CREATED);
-//        } catch(Exception e) {
-//            System.out.println(e.toString());
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-//    private InstrumentDto convertEntityToDto(Instrument instrument) {
-//        InstrumentDto instrumentDto = new InstrumentDto();
-//        instrumentDto.setIsin(instrument.getIsin());
-//        instrumentDto.setIssuerName(instrument.getIssuerName());
-//        instrumentDto.setPositions(instrument.getShortPositions());
-//        return instrumentDto;
-//    }
 }
 
