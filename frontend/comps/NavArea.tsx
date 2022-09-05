@@ -26,7 +26,6 @@ export default function NavArea({ children }: { children: ReactNode }) {
             <Link href={"/"}>
               <a>
                 <Image
-                  // style={"margin-top: 1rem"}
                   src={"/teddy-bear_1f9f8.png"}
                   width={"100px"}
                   height={"100px"}
