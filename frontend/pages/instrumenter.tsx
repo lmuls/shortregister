@@ -1,32 +1,31 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import CollapsibleTable from "../comps/Table";
-import style from "../styles/Instrumenter.module.scss";
 
-export interface ShortPositionHistoryDto {
+export interface ShortPositionHistoryDTO {
   date: string;
   shares: number;
   shortPercent: number;
 }
 
-export interface ShortPosition {
+export interface ShortPositionDTO {
   issuerName: string;
   companyName: string;
   active: boolean;
   opened: string;
   closed: string;
-  history: ShortPositionHistoryDto[];
+  history: ShortPositionHistoryDTO[];
 }
 
-export interface Instrument {
+export interface InstrumentDTO {
   isin: string;
   issuerName: string;
-  shortPositions: ShortPosition[];
+  shortPositions: ShortPositionDTO[];
 }
 
-function Instrumenter({ instruments }: { instruments: Instrument[] }) {
+function Instrumenter({ instruments }: { instruments: InstrumentDTO[] }) {
   return (
-    <div className={style.instruments}>
+    <div>
       <CollapsibleTable content={instruments} />
     </div>
   );
@@ -39,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log(url);
   const res = await fetch(url);
 
-  let instruments: Instrument[] = [];
+  let instruments: InstrumentDTO[] = [];
   if (res.status == 200) {
     instruments = await res.json();
   } else {

@@ -75,6 +75,7 @@
             <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
+<<<<<<< HEAD
 <!--        <dependency>-->
 <!--            <groupId>org.openapitools</groupId>-->
 <!--            <artifactId>jackson-databind-nullable</artifactId>-->

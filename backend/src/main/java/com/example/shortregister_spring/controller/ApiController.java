@@ -4,7 +4,6 @@ import com.example.shortregister_spring.model.Instrument;
 import com.example.shortregister_spring.model.ShortPosition;
 import com.example.shortregister_spring.model.ShortPositionHistory;
 import com.example.shortregister_spring.model.Shorter;
-import com.example.shortregister_spring.model.dto.ChartDataEndpointDto;
 import com.example.shortregister_spring.model.dto.InstrumentDto;
 import com.example.shortregister_spring.model.dto.ShorterDto;
 import com.example.shortregister_spring.repository.InstrumentRepository;
@@ -19,7 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.ServerException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,14 +35,6 @@ public class ApiController {
     @Autowired
     ShortPositionRepository shortPositionRepository;
 
-//    private final InstrumentService instrumentService;
-
-
-//    public ApiController(InstrumentService instrumentService) {
-//        this.instrumentService = instrumentService;
-//    }
-
-
     @Autowired
     InstrumentRepository instrumentRepository;
 
@@ -59,9 +50,8 @@ public class ApiController {
     @GetMapping("/instruments/{issuerName}")
     public ResponseEntity<InstrumentDto> getInstrumentByIssuerName(@PathVariable(value="issuerName") String issuerName) {
         issuerName = issuerName.replaceAll("-", " ");
-        System.out.println(issuerName);
         try {
-            return new ResponseEntity<InstrumentDto>(instrumentService.getInstrumentByIssuerName(issuerName), HttpStatus.OK);
+            return new ResponseEntity<>(instrumentService.getInstrumentByIssuerName(issuerName), HttpStatus.OK);
         } catch(Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -118,33 +108,6 @@ public class ApiController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
-
     }
-
-//    @GetMapping("shorter/{id}")
-//    public ResponseEntity<Shorter> getShorterById(@PathVariable(value = "id") int id) {
-//        Shorter shorter = shorterRepository.getById(id);
-//        System.out.println(shorter.);
-//        return new ResponseEntity<>(shorter, HttpStatus.OK);
-//    }
-
-//    @PostMapping("/instrument")
-//    public ResponseEntity<Instrument> createInstrument(@RequestBody Instrument instrument) {
-//        try {
-//            Instrument _instrument = instrumentRepository.save(new Instrument(instrument.getIsin(), instrument.getIssuerName()));
-//            return new ResponseEntity<>(_instrument, HttpStatus.CREATED);
-//        } catch(Exception e) {
-//            System.out.println(e.toString());
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-//    private InstrumentDto convertEntityToDto(Instrument instrument) {
-//        InstrumentDto instrumentDto = new InstrumentDto();
-//        instrumentDto.setIsin(instrument.getIsin());
-//        instrumentDto.setIssuerName(instrument.getIssuerName());
-//        instrumentDto.setPositions(instrument.getShortPositions());
-//        return instrumentDto;
-//    }
 }
 

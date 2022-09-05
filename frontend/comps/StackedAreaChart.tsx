@@ -8,29 +8,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { ShortPositionHistoryDto } from "../pages/instrumenter";
-import { parse, parseShortPositions } from "../util/mainUtils";
-
-const data = [
-  {
-    date: "01.01.2021",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    date: "02.01.2021",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    date: "03.01.2021",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-];
 
 interface ChartDataDto {
   [key: string]: string;
@@ -46,7 +23,7 @@ interface ChartState {
   entries: string[];
 }
 
-export default class StackedAreaChart extends React.Component<
+export default class StackedAreaChart extends PureComponent<
   ChartProps,
   ChartState
 > {
@@ -81,6 +58,8 @@ export default class StackedAreaChart extends React.Component<
   }
 
   render() {
+    let currentColor = "#2e86abff";
+
     return (
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
@@ -94,36 +73,22 @@ export default class StackedAreaChart extends React.Component<
             bottom: 0,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
+          {/*<CartesianGrid strokeDasharray="3 3" />*/}
+          <XAxis dataKey={"date"} />
           <YAxis />
-          <Tooltip />
-          {this.state.entries.map((entry) => {
+          <Tooltip key={"x"} />
+          {this.state.entries.map((entry, index) => {
             return (
               <Area
                 key={entry}
                 type="monotone"
                 dataKey={entry}
                 stackId="1"
-                stroke="#8884d8"
-                fill="#8884d8"
+                stroke={currentColor}
+                fill={currentColor}
               />
             );
           })}
-          <Area
-            type="monotone"
-            dataKey="pv"
-            stackId="1"
-            stroke="#82ca9d"
-            fill="#82ca9d"
-          />
-          <Area
-            type="monotone"
-            dataKey="amt"
-            stackId="1"
-            stroke="#ffc658"
-            fill="#ffc658"
-          />
         </AreaChart>
       </ResponsiveContainer>
     );

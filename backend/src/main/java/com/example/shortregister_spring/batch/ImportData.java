@@ -61,7 +61,6 @@ public class ImportData {
         for (CompanyDto companyDto : dataImport) {
             parseInstance(companyDto);
         }
-//        parseInstance(dataImport);
     }
 
     public void parseInstance(CompanyDto company) {

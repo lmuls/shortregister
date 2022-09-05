@@ -17,11 +17,8 @@ public class ShortregisterSpringApplication {
     @Scheduled(cron = GET_DATA_CHRONEX)
     void getExternalDataTrigger() {
         String url = "http://127.0.0.1:8080/get-data";
-
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(url, String.class);
-
-        System.out.println(result);
+        restTemplate.getForObject(url, String.class);
     }
 
     public static void main(String[] args) {

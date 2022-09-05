@@ -1,4 +1,5 @@
 @import 'colors';
+@import 'sizes';
 
 html,
 body {
@@ -35,3 +36,17 @@ li {
     font-size: 1.6rem;
 }
 
+.dashboard-item {
+  @include morph
+}
+
+.MuiPaper-root {
+  background: $rich-black-fogra-29;
+
+  .MuiTableHead-root {
+    .MuiTableCell-root {
+      background: $rich-black-fogra-29;
+    }
+  }
+
+}

@@ -44,20 +44,13 @@ $border-radius: 20px;
   #pageContents {
     border-radius: $border-radius;
     background: $rich-black-fogra-29;
-    //overflow-y: scroll;
+    overflow-y: scroll;
     height: 75%;
     max-width: 95%;
     margin-left: auto;
     margin-right: 1rem;
 
     @media (min-width: 768px) {
-      //position: absolute;
-      //top: $navAreaHeight;
-      //left: $navAreaWidth;
-
-
-      //min-height: 80%;
-      //width: 70%;
       box-shadow: 5px 5px 5px rgba(black, 0.6);
     }
   }
