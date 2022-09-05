@@ -39,3 +39,14 @@ li {
 .dashboard-item {
   @include morph
 }
+
+.MuiPaper-root {
+  background: $rich-black-fogra-29;
+
+  .MuiTableHead-root {
+    .MuiTableCell-root {
+      background: $rich-black-fogra-29;
+    }
+  }
+
+}

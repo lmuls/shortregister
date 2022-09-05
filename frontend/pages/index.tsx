@@ -1,28 +1,22 @@
-import type { NextPage, GetServerSideProps } from "next";
-import NavArea from "../comps/NavArea";
-import Head from "next/head";
+import type { GetServerSideProps } from "next";
 import Image from "next/image";
-import styles from "../styles/Home.module.scss";
 import heroImg from "../public/115.jpg";
-import Instrumenter, { Instrument } from "./instrumenter";
-import BasicList from "../comps/BasicList/BasicList";
-import Pokemon from "../comps/Pokemon";
+import styles from "../styles/Home.module.scss";
+import { InstrumentDTO } from "./instrumenter";
 
-const Home = (props: { instruments: Instrument[] }) => {
+const Home = (props: { instruments: InstrumentDTO[] }) => {
   return (
     <>
-      {/*<Image*/}
-      {/*  src={heroImg}*/}
-      {/*  alt={"Cartonish image of a bull and a bear"}*/}
-      {/*  priority*/}
-      {/*/>*/}
       <div id={styles.mainCont}>
+        <Image
+          src={heroImg}
+          alt={"Cartonish image of a bull and a bear"}
+          priority
+        />
         <div className={styles.heroCont}>
           <h1>Welcome to the Short Register for OSEBX</h1>
           <p>Here you will find information of all stocks shorted above 2 %.</p>
-          {/*< div className="hero-content"></div>*/}
         </div>
-        {/*<BasicList elements={props.instruments} />*/}
       </div>
     </>
   );
@@ -34,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const url = process.env.NEXT_PUBLIC_API_URL + "instruments";
   const res = await fetch(url);
 
-  let instruments: Instrument[] = [];
+  let instruments: InstrumentDTO[] = [];
   if (res.status == 200) {
     instruments = await res.json();
   } else {

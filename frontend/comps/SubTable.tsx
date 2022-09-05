@@ -6,14 +6,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Link from "next/link";
 import * as React from "react";
-import { ShortPosition } from "../pages/instrumenter";
+import { ShortPositionDTO } from "../pages/instrumenter";
 import { formatDate, slugify } from "../util/mainUtils";
 
 export function SubTable({
   shortPositions,
   isInstrument,
 }: {
-  shortPositions: ShortPosition[];
+  shortPositions: ShortPositionDTO[];
   isInstrument: boolean;
 }) {
   return (

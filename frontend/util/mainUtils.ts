@@ -1,4 +1,7 @@
-import { ShortPosition, ShortPositionHistoryDto } from "../pages/instrumenter";
+import {
+  ShortPositionDTO,
+  ShortPositionHistoryDTO,
+} from "../pages/instrumenter";
 
 interface ChartData {
   date: string;

@@ -4,7 +4,6 @@ import com.example.shortregister_spring.model.Instrument;
 import com.example.shortregister_spring.model.ShortPosition;
 import com.example.shortregister_spring.model.ShortPositionHistory;
 import com.example.shortregister_spring.model.Shorter;
-import com.example.shortregister_spring.model.dto.ChartDataEndpointDto;
 import com.example.shortregister_spring.model.dto.InstrumentDto;
 import com.example.shortregister_spring.model.dto.ShorterDto;
 import com.example.shortregister_spring.repository.InstrumentRepository;
@@ -19,7 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.ServerException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,9 +50,8 @@ public class ApiController {
     @GetMapping("/instruments/{issuerName}")
     public ResponseEntity<InstrumentDto> getInstrumentByIssuerName(@PathVariable(value="issuerName") String issuerName) {
         issuerName = issuerName.replaceAll("-", " ");
-        System.out.println(issuerName);
         try {
-            return new ResponseEntity<InstrumentDto>(instrumentService.getInstrumentByIssuerName(issuerName), HttpStatus.OK);
+            return new ResponseEntity<>(instrumentService.getInstrumentByIssuerName(issuerName), HttpStatus.OK);
         } catch(Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

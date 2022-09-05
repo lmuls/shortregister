@@ -1,3 +1,4 @@
+import { withStyles } from "@mui/material";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -12,16 +13,16 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Instrument } from "../pages/instrumenter";
-import { ShortPosition } from "../pages/instrumenter";
+import { InstrumentDTO } from "../pages/instrumenter";
+import { ShortPositionDTO } from "../pages/instrumenter";
 import Link from "next/link";
-import { Shorter } from "../pages/shortere";
+import { ShorterDTO } from "../pages/shortere";
 import { formatDate, slugify } from "../util/mainUtils";
 import { SubTable } from "./SubTable";
 
 export interface TableElement {
   name: string;
-  shortPositions: ShortPosition[];
+  shortPositions: ShortPositionDTO[];
   isInstrument?: boolean;
 }
 
@@ -78,21 +79,21 @@ function Row({ name, shortPositions, isInstrument }: TableElement) {
 }
 
 function isInstrument(
-  possibleInstrument: Instrument[] | Shorter[]
-): possibleInstrument is Instrument[] {
-  return (possibleInstrument as Instrument[])[0].issuerName !== undefined;
+  possibleInstrument: InstrumentDTO[] | ShorterDTO[]
+): possibleInstrument is InstrumentDTO[] {
+  return (possibleInstrument as InstrumentDTO[])[0].issuerName !== undefined;
 }
 
 export default function CollapsibleTable({
   content,
 }: {
-  content: Shorter[] | Instrument[];
+  content: ShorterDTO[] | InstrumentDTO[];
 }) {
   if (isInstrument(content)) {
     return (
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label="collapsible table">
-          <TableHead>
+          <TableHead style={{ backgroundColor: "red", color: "red" }}>
             <TableRow>
               <TableCell />
               <TableCell>Instrument</TableCell>
