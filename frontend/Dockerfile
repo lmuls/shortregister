@@ -20,6 +20,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
@@ -27,7 +28,9 @@ COPY . .
 
 # RUN yarn build
 # If using npm comment out above and use below instead
+#RUN NEXT_PUBLIC_API_URL=APP_NEXT_PUBLIC_API_URL npm run build
 RUN npm run build
+
 
 # Production image, copy all the files and run next
 FROM node:16-alpine AS runner

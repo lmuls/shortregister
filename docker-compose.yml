@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  db:
+    build: backend/src/main/resources/database
+    networks:
+      - stagingnetwork
+    ports:
+      - "5432:5432"
+  backend:
+    build: backend
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db:5432/shortdb
+    depends_on:
+      - db
+    networks:
+      - stagingnetwork
+
+  frontend:
+    build:
+      context: frontend
+#      network: stagingnetwork
+    ports:
+      - "3000:3000"
+    networks:
+      - stagingnetwork
+    depends_on:
+      - backend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://172.28.0.1:8080/api/
+
+#    healthcheck:
+#      test: curl --fail http://backend:8080/api/instruments || exit 1
+#      interval: 10s
+#      retries: 5
+#      start_period: 5s
+#      timeout: 10s
+
+networks:
+  stagingnetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
+
+
+#    volumes:
+#      - type: bind
+#        source: ./my_files
+#        target: /my_files
+
+#      Uncomment to persist db data in local folder
+#      - type: bind
+#        source: ./db_data
+#        target: /var/lib/postgresql/data

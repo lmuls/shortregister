@@ -1,3 +1,7 @@
-FROM amazoncorretto:11-alpine3.13
-COPY target/shortregister_spring-0.0.1-SNAPSHOT.jar shortregister_spring-0.0.1-SNAPSHOT.jar
-ENTRYPOINT ["java", "-jar", "shortregister_spring-0.0.1-SNAPSHOT.jar"]
+FROM eclipse-temurin:11
+#RUN addgroup -S spring && adduser -S spring -G spring
+#USER spring:spring
+VOLUME /tmp
+ARG JAR_FILE=/target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
