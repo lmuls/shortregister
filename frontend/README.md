@@ -1,18 +1,3 @@
-##Shortregister OSEBX
-
-This is a hobby project to explore the exiting(?) world of Java Spring Boot.  
-The app provides daily updated data on companies that are shorted at Oslo Børs.
-
-The project is simple, basic and includes shortcuts here and there.  
-It was created to learn the key concepts of the Spring framework, not to be a showcase for quality code. 
-
-**The stack**  
-Database: Postgresql  
-Backend: Java Spring Boot  
-Frontend: React Typescript with Next.js  
-Deployed via Docker / Kubernetes
-
-
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

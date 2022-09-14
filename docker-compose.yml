@@ -21,7 +21,8 @@ services:
   frontend:
     build:
       context: frontend
-#      network: stagingnetwork
+      # Because of the necesity for data at build-time the networking/api paths needs more work to be runnable from docker compose.
+      network: host
     ports:
       - "3000:3000"
     networks:
