@@ -1,4 +1,4 @@
-##Shortregister OSEBX
+Shortregister OSEBX
 
 This is a hobby project to explore the exiting(?) world of Java Spring Boot.  
 The app provides daily updated data on companies that are shorted at Oslo Børs by parsing an API from the Norwegian Financial Supervisory Authority.
